@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./Homepage.css";
 import UserContext from "../auth/UserContext";
 
+
 /** Homepage of site.
  *
  * Shows welcome message or login/register buttons.
@@ -35,7 +36,7 @@ function Homepage() {
                 to="/signup">
                 Sign up
               </Link>
-              
+
             </p>
           )}
       </div>

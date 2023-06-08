@@ -57,7 +57,7 @@ function App() {
             let { username } = decode(token);
             // put the token on the Api class so it can use it to call the API.
             FrienderApi.token = token;
-            let currentUser = await  FrienderApi.getCurrentUser(username);
+            let currentUser = await FrienderApi.getCurrentUser(username);
 
             setCurrentUser({
               infoLoaded: true,
@@ -100,7 +100,7 @@ function App() {
    * Make sure you await this function to see if any error happens.
    */
   async function signup(signupData) {
-    let token = await  FrienderApi.signup(signupData);
+    let token = await FrienderApi.signup(signupData);
     setToken(token);
   }
 
@@ -115,6 +115,20 @@ function App() {
     setToken(token);
   }
 
+  async function getPotentialMatches(username) {
+
+    let potential = await FrienderApi.getAllPotentialMatch(username);
+    return potential;
+
+  }
+  async function getSuccessfulMatches(username) {
+
+    let successful = await FrienderApi.getAllSuccessfulMatch(username);
+    return successful;
+  }
+
+
+
 
   if (!currentUser.infoLoaded) return <LoadingSpinner />;
 
@@ -127,7 +141,8 @@ function App() {
     >
       <div className="App">
         <Navigation logout={logout} />
-        <RoutesList currentUser={currentUser.data} login={login} signup={signup} />
+        <RoutesList currentUser={currentUser.data} login={login} signup={signup}
+         getSuccessful={getSuccessfulMatches} getPotential={getPotentialMatches} />
       </div>
     </UserContext.Provider>
   );

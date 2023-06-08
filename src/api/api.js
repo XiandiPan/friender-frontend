@@ -63,6 +63,25 @@ class FrienderApi {
     let res = await this.request(`users/${username}`, data, "patch");
     return res.user;
   }
+
+  /**get all potential matches */
+
+  static async getAllPotentialMatch(username){
+    console.log("inAPI.js getAllP===", username)
+    let res = await this.request(`users/${username}/matches/potential`);
+    return res.allPotentialMatches
+
+
+  }
+
+  /**get all successful matches  */
+
+  static async getAllSuccessfulMatch(username){
+    let res = await this.request(`users/${username}/matches/successful`);
+    return res.allSuccessfulMatches
+
+
+  }
 }
 
 

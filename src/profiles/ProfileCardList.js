@@ -13,7 +13,7 @@ import LoadingSpinner from "../common/LoadingSpinner";
  * Routes -> { CompanyCard, SearchForm }
  */
 
-function ProfileList() {
+function ProfileCardList({matches}) {
   console.debug("ProfileList");
 
   const [profiles, setProfiles] = useState(null);
@@ -56,4 +56,4 @@ function ProfileList() {
   );
 }
 
-export default ProfileList;
+export default ProfileCardList;

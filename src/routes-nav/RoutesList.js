@@ -6,7 +6,7 @@ import ProfileForm from "../profiles/ProfileForm";
 import SignupForm from "../auth/SignupForm";
 import PotentialMatches from "../matches/PotentialMatches";
 import SuccessfulMatches from "../matches/SuccessfulMatches";
-import ProfileCard from "../profiles/ProfileCard";
+
 
 /** Site-wide routes.
  *
@@ -15,7 +15,7 @@ import ProfileCard from "../profiles/ProfileCard";
  * Visiting a non-existant route navigates to the homepage.
  */
 
-function RoutesList({ login, signup, currentUser }) {
+function RoutesList({ login, signup, currentUser, getSuccessful, getPotential }) {
   console.debug(
     "Routes",
     `login=${typeof login}`,
@@ -37,9 +37,8 @@ function RoutesList({ login, signup, currentUser }) {
         {currentUser &&
         <>
           <Route path="/profile" element={<ProfileForm />} />
-          <Route path="/potential" element={<PotentialMatches />} />
-          {/* <Route path="/potential/:username" element={<ProfileCard />} /> */}
-          <Route path="/successful" element={<SuccessfulMatches />} />
+          <Route path="/potential" element={<PotentialMatches getPotential={getPotential}/>} />
+          <Route path="/successful" element={<SuccessfulMatches getSuccessful={getSuccessful}/>} />
 
         </>
       }
