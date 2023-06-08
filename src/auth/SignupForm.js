@@ -23,8 +23,8 @@ function SignupForm({ signup }) {
     email: "apple@gmial.com",
     image:"",
     zip: "29681",
-    hobbies: "run",
-    interest: "jump"
+    interests: "jump",
+    hobbies: "run"
   });
   const [formErrors, setFormErrors] = useState([]);
 
@@ -43,7 +43,7 @@ function SignupForm({ signup }) {
     evt.preventDefault();
     try {
       await signup(formData);
-      navigate("/companies")
+      navigate("/")
     } catch (err) {
       setFormErrors(err);
     }
@@ -111,7 +111,7 @@ function SignupForm({ signup }) {
                 />
               </div>
               <div className="mb-3">
-                <label className="form-label">image</label>
+                <label className="form-label">Image</label>
                 <input
                   type="file"
                   name="image"
@@ -140,12 +140,12 @@ function SignupForm({ signup }) {
                 />
               </div>
               <div className="mb-3">
-                <label className="form-label">Interest</label>
+                <label className="form-label">Interests</label>
                 <input
 
-                  name="interest"
+                  name="interests"
                   className="form-control"
-                  value={formData.interest}
+                  value={formData.interests}
                   onChange={handleChange}
                 />
               </div>

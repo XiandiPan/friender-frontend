@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import Alert from "../common/Alert";
-import JoblyApi from "../api/api";
 import UserContext from "../auth/UserContext";
-import "./ProfileForm.css"
+import "./ProfileForm.css";
+import FrienderApi from "../api/api";
 
 
 
@@ -27,6 +27,10 @@ function ProfileForm() {
     lastName: currentUser.lastName,
     email: currentUser.email,
     username: currentUser.username,
+    interests: currentUser.interests,
+    hobbies: currentUser.hobbies,
+    image: currentUser.image,
+    zip: currentUser.zip,
   });
   const [formErrors, setFormErrors] = useState([]);
 
@@ -57,13 +61,17 @@ function ProfileForm() {
       firstName: formData.firstName,
       lastName: formData.lastName,
       email: formData.email,
+      interests: formData.interests,
+      hobbies: formData.hobbies,
+      image: formData.image,
+      zip: formData.zip
     };
 
     let username = formData.username;
     let updatedUser;
 
     try {
-      updatedUser = await JoblyApi.saveProfile(username, profileData);
+      updatedUser = await FrienderApi.saveProfile(username, profileData);
     } catch (errors) {
       setFormErrors(errors);
       return;
@@ -125,12 +133,52 @@ function ProfileForm() {
             <div className="mb-3">
               <label className="form-label">Email</label>
               <input
+                type="email"
                 name="email"
                 className="form-control"
                 value={formData.email}
                 onChange={handleChange}
               />
             </div>
+            <div className="mb-3">
+                <label className="form-label">Image</label>
+                <input
+                  type="file"
+                  name="image"
+                  className="form-control"
+                  value={formData.image}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">zip</label>
+                <input
+
+                  name="zip"
+                  className="form-control"
+                  value={formData.zip}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Hobbies</label>
+                <input
+                  name="hobbies"
+                  className="form-control"
+                  value={formData.hobbies}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Interests</label>
+                <input
+
+                  name="interests"
+                  className="form-control"
+                  value={formData.interests}
+                  onChange={handleChange}
+                />
+              </div>
 
             {formErrors.length
               ? <Alert type="danger" messages={formErrors} />

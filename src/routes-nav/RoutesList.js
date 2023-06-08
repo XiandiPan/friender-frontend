@@ -4,6 +4,9 @@ import Homepage from "../homepage/Homepage";
 import LoginForm from "../auth/LoginForm";
 import ProfileForm from "../profiles/ProfileForm";
 import SignupForm from "../auth/SignupForm";
+import PotentialMatches from "../matches/PotentialMatches";
+import SuccessfulMatches from "../matches/SuccessfulMatches";
+import ProfileCard from "../profiles/ProfileCard";
 
 /** Site-wide routes.
  *
@@ -34,6 +37,9 @@ function RoutesList({ login, signup, currentUser }) {
         {currentUser &&
         <>
           <Route path="/profile" element={<ProfileForm />} />
+          <Route path="/potential" element={<PotentialMatches />} />
+          {/* <Route path="/potential/:username" element={<ProfileCard />} /> */}
+          <Route path="/successful" element={<SuccessfulMatches />} />
 
         </>
       }
