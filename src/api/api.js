@@ -18,7 +18,8 @@ class FrienderApi {
     console.debug("API Call:", endpoint, data, method);
 
     const url = `${BASE_URL}/${endpoint}`;
-    const headers = { Authorization: `Bearer ${FrienderApi.token}` };
+    const headers = { Authorization: `Bearer ${FrienderApi.token}`,
+      'Content-Type': 'multipart/form-data' };
     const params = (method === "get")
         ? data
         : {};

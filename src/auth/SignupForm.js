@@ -21,7 +21,7 @@ function SignupForm({ signup }) {
     firstName: "apple",
     lastName: "pan",
     email: "apple@gmial.com",
-    image:"",
+    image: "",
     zip: "29681",
     interests: "jump",
     hobbies: "run"
@@ -43,7 +43,7 @@ function SignupForm({ signup }) {
     evt.preventDefault();
     try {
       await signup(formData);
-      navigate("/")
+      navigate("/");
     } catch (err) {
       setFormErrors(err);
     }
@@ -53,7 +53,12 @@ function SignupForm({ signup }) {
   function handleChange(evt) {
     const { name, value } = evt.target;
     setFormData(data => ({ ...data, [name]: value }));
-  }
+  };
+
+  function handleImageChange(evt) {
+    const { name } = evt.target;
+    setFormData(data => ({ ...data, [name]: evt.target.files[0] }));
+  };
 
   return (
     <div className="SignupForm">
@@ -61,7 +66,7 @@ function SignupForm({ signup }) {
         <h2 className="mb-3">Sign Up</h2>
         <div className="card">
           <div className="card-body">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
               <div className="mb-3">
                 <label className="form-label">Username</label>
                 <input
@@ -116,14 +121,13 @@ function SignupForm({ signup }) {
                   type="file"
                   name="image"
                   className="form-control"
-                  value={formData.image}
-                  onChange={handleChange}
+                  value=""
+                  onChange={handleImageChange}
                 />
               </div>
               <div className="mb-3">
                 <label className="form-label">zip</label>
                 <input
-
                   name="zip"
                   className="form-control"
                   value={formData.zip}
