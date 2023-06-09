@@ -111,7 +111,6 @@ function App() {
    * Make sure you await this function to see if any error happens.
    */
   async function login(loginData) {
-    console.log("login hit here")
     let token = await FrienderApi.login(loginData);
     setToken(token);
   }

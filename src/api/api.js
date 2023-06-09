@@ -48,7 +48,6 @@ class FrienderApi {
   /** Get token for login from username, password. */
 
   static async login(data) {
-    console.log("login=iluabcbeca",data)
     let res = await this.request(`auth/token`, data, "post");
     return res.token;
   }

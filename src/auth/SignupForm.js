@@ -16,15 +16,15 @@ import { useNavigate } from "react-router-dom";
 function SignupForm({ signup }) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: "apple2",
-    password: "apple",
-    firstName: "apple",
-    lastName: "pan",
-    email: "apple@gmial.com",
+    username: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    email: "",
     image: "",
-    zip: "29681",
-    interests: "jump",
-    hobbies: "run"
+    zip: "",
+    interests: "",
+    hobbies: ""
   });
   const [formErrors, setFormErrors] = useState([]);
 
@@ -116,16 +116,6 @@ function SignupForm({ signup }) {
                 />
               </div>
               <div className="mb-3">
-                <label className="form-label">Image</label>
-                <input
-                  type="file"
-                  name="image"
-                  className="form-control"
-                  value=""
-                  onChange={handleImageChange}
-                />
-              </div>
-              <div className="mb-3">
                 <label className="form-label">zip</label>
                 <input
                   name="zip"
@@ -152,6 +142,19 @@ function SignupForm({ signup }) {
                   value={formData.interests}
                   onChange={handleChange}
                 />
+              </div>
+              <div className="mb-3">
+                <label className="form-label btn btn-primary" htmlFor="img">Upload an image</label>
+                <input
+                  type="file"
+                  name="image"
+                  className="form-control"
+                  id="img"
+                  style={{display:"none"}}
+                  value=""
+                  onChange={handleImageChange}
+                />
+                <p className ="form-control" style={{display:"inline"}}>{formData.image.name}</p>
               </div>
 
               {formErrors.length

@@ -29,8 +29,8 @@ function ProfileForm() {
     username: currentUser.username,
     interests: currentUser.interests,
     hobbies: currentUser.hobbies,
-    image: currentUser.image,
-    zip: currentUser.zip,
+    image: currentUser.imageUrl,
+    zip: currentUser.zipCode,
   });
   const [formErrors, setFormErrors] = useState([]);
 
@@ -63,8 +63,6 @@ function ProfileForm() {
       email: formData.email,
       interests: formData.interests,
       hobbies: formData.hobbies,
-      image: formData.image,
-      zip: formData.zip
     };
 
     let username = formData.username;
@@ -97,6 +95,11 @@ function ProfileForm() {
     }));
     setFormErrors([]);
   }
+
+  function handleImageChange(evt) {
+    const { name } = evt.target;
+    setFormData(data => ({ ...data, [name]: evt.target.files[0] }));
+  };
 
   return (
     <div className="ProfileForm col-md-6 col-lg-4 offset-md-3 offset-lg-4">
@@ -141,44 +144,37 @@ function ProfileForm() {
               />
             </div>
             <div className="mb-3">
-                <label className="form-label">Image</label>
-                <input
-                  type="file"
-                  name="image"
-                  className="form-control"
-                  value={formData.image}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">zip</label>
-                <input
+              <label className="form-label">Hobbies</label>
+              <input
+                name="hobbies"
+                className="form-control"
+                value={formData.hobbies}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Interests</label>
+              <input
 
-                  name="zip"
-                  className="form-control"
-                  value={formData.zip}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Hobbies</label>
-                <input
-                  name="hobbies"
-                  className="form-control"
-                  value={formData.hobbies}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Interests</label>
-                <input
-
-                  name="interests"
-                  className="form-control"
-                  value={formData.interests}
-                  onChange={handleChange}
-                />
-              </div>
+                name="interests"
+                className="form-control"
+                value={formData.interests}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label btn btn-primary" htmlFor="img">Update my image</label>
+              <input
+                type="file"
+                name="image"
+                className="form-control"
+                id="img"
+                style={{ display: "none" }}
+                value=""
+                onChange={handleImageChange}
+              />
+              <p className="form-control" style={{ display: "inline" }}>{formData.image?.name}</p>
+            </div>
 
             {formErrors.length
               ? <Alert type="danger" messages={formErrors} />

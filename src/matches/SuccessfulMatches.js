@@ -1,6 +1,7 @@
 import UserContext from "../auth/UserContext";
 import { useEffect, useState, useContext } from "react";
 import ProfileCardList from "../profiles/ProfileCardList";
+import "./Matches.css";
 
 
 
@@ -27,8 +28,8 @@ function SuccessfulMatches({getSuccessful}){
 
   return (
     <div>
-      <h1>Matches</h1>
-      <ProfileCardList matches={matches}/>
+      <h3>Matches</h3>
+      <ProfileCardList matches={matches} isSuccessful={true}/>
     </div>
   );
 }

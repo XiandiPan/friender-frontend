@@ -1,0 +1,30 @@
+#like-btn{
+    display:inline-block;
+}
+
+#dislike-btn{
+    display:inline-block;
+}
+
+.ProfileCard{
+    display: inline-block;
+    min-width: 20rem;
+    min-height: 10rem;
+}
+
+.cardWrapper{
+    display:flex;
+    margin: 20px;
+    justify-content:center;
+    align-items: center;
+}
+
+.profile-image{
+    width: 10rem;
+    height: 10rem;
+}
+
+.no-results{
+    color: #ffffff;
+    text-shadow: 2px 2px 5px rgb(52, 48, 47);
+}

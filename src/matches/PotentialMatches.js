@@ -28,8 +28,8 @@ function PotentialMatches({ getPotential }) {
 
   return (
     <div>
-      <h1>Find a friend</h1>
-      <ProfileCardList matches={matches}/>
+      <h3>Find a friend</h3>
+      <ProfileCardList matches={matches} isSuccessful={false}/>
     </div>
   );
 }

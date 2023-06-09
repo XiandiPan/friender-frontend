@@ -13,7 +13,7 @@ import LoadingSpinner from "../common/LoadingSpinner";
  * Routes -> { CompanyCard, SearchForm }
  */
 
-function ProfileCardList({matches}) {
+function ProfileCardList({matches, isSuccessful}) {
   console.debug("ProfileList");
   const [profiles, setProfiles] = useState(matches)
 
@@ -29,11 +29,13 @@ function ProfileCardList({matches}) {
       {profiles.length
         ? (
           <div className="ProfileList-list">
-            {profiles.map(m => (<ProfileCard key={m.matchId}
-            remove={removeProfileCard} match={m}/>))}
+            {profiles.map((m,idx) => (<div key={m.matchId} style={{zIndex:idx}}>
+              <ProfileCard
+            remove={removeProfileCard} match={m} isSuccessful={isSuccessful}/>
+            </div>))}
           </div>
         ) : (
-          <p className="lead">Sorry, no results were found!</p>
+          <p className="no-results">Sorry, no results were found!</p>
         )}
     </div>
   );
