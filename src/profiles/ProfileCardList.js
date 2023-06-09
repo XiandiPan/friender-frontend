@@ -22,14 +22,14 @@ function ProfileCardList({matches}) {
     setProfiles((prevProfiles) => prevProfiles.filter((profile)=>profile.matchId !== id))
   }
 
-  if (!matches) return <LoadingSpinner />;
+  if (!profiles) return <LoadingSpinner />;
 
   return (
     <div className="ProfileList col-md-8 offset-md-2">
-      {matches.length
+      {profiles.length
         ? (
           <div className="ProfileList-list">
-            {matches.map(m => (<ProfileCard key={m.matchId}
+            {profiles.map(m => (<ProfileCard key={m.matchId}
             remove={removeProfileCard} match={m}/>))}
           </div>
         ) : (
