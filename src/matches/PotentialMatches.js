@@ -9,7 +9,6 @@ function PotentialMatches({ getPotential }) {
   const { currentUser } = useContext(UserContext);
   const [matches, setMatches] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log("currentUser=====", currentUser.username);
 
 
   useEffect(
@@ -17,15 +16,12 @@ function PotentialMatches({ getPotential }) {
       async function getPotentialMatches() {
 
         const newMatches = await getPotential(currentUser.username);
-        console.log("=========matches", newMatches);
-        setMatches(await getPotential(currentUser.username));
+        setMatches(newMatches);
         setIsLoading(false);
       }
       getPotentialMatches();
-    }
-    , []);
-  console.log("match============", matches);
-  // if (!currentUser.infoLoaded) return <LoadingSpinner />;
+    },[]);
+
   if (isLoading) {
     return (<p>Loading...</p>);
   }
@@ -34,8 +30,6 @@ function PotentialMatches({ getPotential }) {
     <div>
       <h1>Find a friend</h1>
       <ProfileCardList matches={matches}/>
-      {/* <ul>{matches.map(match => <li>{match.matchId}</li>)}</ul> */}
-
     </div>
   );
 }

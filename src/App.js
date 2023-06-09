@@ -57,7 +57,7 @@ function App() {
             let { username } = decode(token);
             // put the token on the Api class so it can use it to call the API.
             FrienderApi.token = token;
-            let currentUser = await FrienderApi.getCurrentUser(username);
+            let currentUser = await FrienderApi.getUser(username);
 
             setCurrentUser({
               infoLoaded: true,
@@ -94,7 +94,7 @@ function App() {
   }
 
   /** Handles site-wide signup.
-   *
+   *getAllSuccessfulMatch
    * Automatically logs them in (set token) upon signup.
    *
    * Make sure you await this function to see if any error happens.
@@ -111,6 +111,7 @@ function App() {
    * Make sure you await this function to see if any error happens.
    */
   async function login(loginData) {
+    console.log("login hit here")
     let token = await FrienderApi.login(loginData);
     setToken(token);
   }
@@ -127,6 +128,15 @@ function App() {
     return successful;
   }
 
+  async function dislikeMatch(id){
+   let result = await FrienderApi.deleteMatch(id);
+   return result
+  }
+
+  async function likeMatch(username, id){
+    let result = await FrienderApi.likeMatch(username, id);
+    return result
+  }
 
 
 
@@ -136,7 +146,9 @@ function App() {
     <UserContext.Provider
       value={{
         currentUser: currentUser.data,
-        setCurrentUser
+        setCurrentUser,
+        dislikeMatch,
+        likeMatch
       }}
     >
       <div className="App">

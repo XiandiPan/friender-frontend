@@ -18,8 +18,11 @@ class FrienderApi {
     console.debug("API Call:", endpoint, data, method);
 
     const url = `${BASE_URL}/${endpoint}`;
-    const headers = { Authorization: `Bearer ${FrienderApi.token}`,
-      'Content-Type': 'multipart/form-data' };
+    const headers = endpoint === `auth/register` ?
+    { Authorization: `Bearer ${FrienderApi.token}`,
+      'Content-Type': 'multipart/form-data' } :
+    { Authorization: `Bearer ${FrienderApi.token}`}
+
     const params = (method === "get")
         ? data
         : {};
@@ -35,9 +38,9 @@ class FrienderApi {
 
   // Individual API routes
 
-  /** Get the current user. */
+  /** Get the user. */
 
-  static async getCurrentUser(username) {
+  static async getUser(username) {
     let res = await this.request(`users/${username}`);
     return res.user;
   }
@@ -45,6 +48,7 @@ class FrienderApi {
   /** Get token for login from username, password. */
 
   static async login(data) {
+    console.log("login=iluabcbeca",data)
     let res = await this.request(`auth/token`, data, "post");
     return res.token;
   }
@@ -52,7 +56,6 @@ class FrienderApi {
   /** Signup for site. */
 
   static async signup(data) {
-    console.log("data==================", data)
     let res = await this.request(`auth/register`, data, "post");
     return res.token;
   }
@@ -67,11 +70,8 @@ class FrienderApi {
   /**get all potential matches */
 
   static async getAllPotentialMatch(username){
-    console.log("inAPI.js getAllP===", username)
     let res = await this.request(`users/${username}/matches/potential`);
     return res.allPotentialMatches
-
-
   }
 
   /**get all successful matches  */
@@ -79,9 +79,20 @@ class FrienderApi {
   static async getAllSuccessfulMatch(username){
     let res = await this.request(`users/${username}/matches/successful`);
     return res.allSuccessfulMatches
-
-
   }
+
+  /** delete a potential match */
+  static async deleteMatch(id){
+    let res = await this.request(`matches/potential/${id}`, {}, "delete");
+    return res
+  }
+
+  /** like a potential match */
+  static async likeMatch(username, id){
+    let res = await this.request(`users/${username}/matches/${id}`, {}, "patch");
+    return res
+  }
+
 }
 
 

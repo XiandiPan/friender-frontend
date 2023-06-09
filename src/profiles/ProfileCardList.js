@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import FrienderApi from "../api/api";
-import ProfileCard from "./profile/ProfileCard";
+import ProfileCard from "./ProfileCard";
 import LoadingSpinner from "../common/LoadingSpinner";
 
 /** Show page with list of user profile
@@ -15,39 +15,22 @@ import LoadingSpinner from "../common/LoadingSpinner";
 
 function ProfileCardList({matches}) {
   console.debug("ProfileList");
+  const [profiles, setProfiles] = useState(matches)
 
-  const [profiles, setProfiles] = useState(null);
-
-  useEffect(function getProfilesOnMount() {
-    console.debug("ProfileList useEffect getProfilesOnMount");
-    search();
-  }, []);
-
-  /** Triggered by search form submit; reloads profiles. */
-  async function search(username) {
-    let profiles = await FrienderApi.getProfiles(username);
-    setProfiles(profiles);
+  function removeProfileCard(id){
+    console.log("id=",id, "profiles=", profiles)
+    setProfiles((prevProfiles) => prevProfiles.filter((profile)=>profile.matchId !== id))
   }
 
-  if (!profiles) return <LoadingSpinner />;
+  if (!matches) return <LoadingSpinner />;
 
   return (
     <div className="ProfileList col-md-8 offset-md-2">
-      {profiles.length
+      {matches.length
         ? (
           <div className="ProfileList-list">
-            {profiles.map(p => (
-              <ProfileCard
-                key={p.username}
-                username={p.username}
-                firstName={p.firstName}
-                LastName={p.LastName}
-                image={p.image}
-                hobbies={p.hobbies}
-                interests={p.interests}
-                zip={p.zip}
-              />
-            ))}
+            {matches.map(m => (<ProfileCard key={m.matchId}
+            remove={removeProfileCard} match={m}/>))}
           </div>
         ) : (
           <p className="lead">Sorry, no results were found!</p>

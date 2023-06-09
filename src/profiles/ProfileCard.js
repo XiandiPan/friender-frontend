@@ -1,5 +1,7 @@
-import React from "react";
+import React, {useContext, useState, useEffect} from "react";
 import { Link } from "react-router-dom";
+import FrienderApi from "../api/api";
+import UserContext from "../auth/UserContext";
 
 
 
@@ -9,85 +11,56 @@ import { Link } from "react-router-dom";
  *
  * CompanyList -> CompanyCard
  */
-function ProfileCard({ username, firstName, lastName, email, hobbies, interests, image}) {
+function ProfileCard({ match, remove }) {
   console.debug("ProfileCard");
 
-  // const { hasAppliedToJob, applyToJob } = useContext(UserContext);
-  const { like, notLike } = useContext(UserContext);
-  const [applied, setApplied] = useState();
-  // const [applied, setApplied] = useState();
+  const { currentUser, dislikeMatch, likeMatch } = useContext(UserContext);
+  const [profile, setProfile] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  React.useEffect(
-    function updateAppliedStatus() {
-      console.debug("ProfileCard useEffect updateAppliedStatus", "id=", id);
+  useEffect(function getProfile() {
+    let fetchedProfile = null;
+    async function fetchUserProfile(){
+        if(match.userUserName1 === currentUser.username){
+          fetchedProfile = (await FrienderApi.getUser(match.userUserName2));
+        }else{
+          fetchedProfile = (await FrienderApi.getUser(match.userUserName1));
+        }
+      setProfile(fetchedProfile)
+      setIsLoading(false);
+    }
+    fetchUserProfile();
+  },[]);
 
-      setApplied(hasAppliedToJob(id));
-    },
-    [id, hasAppliedToJob]
-  );
+  function like(){
+    console.log("match liked=",match)
+    remove(match.matchId)
+    likeMatch(currentUser.username, match.matchId)
+  }
 
-  /** Apply for a job */
-  async function handleApply(evt) {
-    if (hasAppliedToJob(id)) return;
-    applyToJob(id);
-    setApplied(true);
+  function dislike(){
+    console.log("match disliked=",match)
+    remove(match.matchId)
+    dislikeMatch(match.matchId)
+  }
+
+  if (isLoading) {
+    return (<p>Loading...</p>);
   }
 
   return (
     <div className="ProfileCard card">
-      {" "}
-      {applied}
       <div className="card-body">
-        <h6 className="card-title">{title}</h6>
-        <p>{companyName}</p>
-        {salary && (
+        <button onClick={dislike}> Dislike </button>
           <div>
-            <small>
-              Salary: {"$" + Intl.NumberFormat("en-US").format(salary)}
-            </small>
+            <p>{profile.username}</p>
           </div>
-        )}
-        {equity !== undefined && (
-          <div>
-            <small>Equity: {equity}</small>
-          </div>
-        )}
-        <button
-          className="btn btn-danger fw-bold text-uppercase float-end"
-          onClick={handleApply}
-          disabled={applied}
-        >
-          {applied ? "Applied" : "Apply"}
-        </button>
+        <button onClick={like}> Like </button>
       </div>
     </div>
   );
 }
 
 
-// export default ProfileCard;
+export default ProfileCard;
 
-// function ProfileCard( { username, firstName, lastName, email, hobbies, interests, image}) {
-//   console.debug("ProfileCard", image);
-
-//   return (
-//     <Link className="ProfileCard card" to={`/potential/${username}`}>
-//       <div className="card-body">
-//         <h6 className="card-title">
-//           {username}
-//           {image && <img src={image}
-//             alt={username}
-//             className="float-end ms-5" />}
-//         </h6>
-
-//         <p><small>{firstName}</small></p>
-//         <p><small>{lastName}</small></p>
-//         <p><small>{email}</small></p>
-//         <p><small>{hobbies}</small></p>
-//         <p><small>{interests}</small></p>
-//       </div>
-//     </Link>
-//   );
-// }
-
-// export default ProfileCard;
